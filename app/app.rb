@@ -5,7 +5,11 @@ ENV["RACK_ENV"] ||= "development"
 
 class TillApp < Sinatra::Base
   get '/' do
-    'Hello Till!'
+    redirect '/orders'
+  end
+
+  get '/orders' do
+    erb :'orders/index'
   end
 
   # start the server if ruby file executed directly
