@@ -26,9 +26,14 @@ class TillApp < Sinatra::Base
   end
 
   get "/shops/?:id?" do
+    if (params[:id] == nil)
+      flash[:errors] = ["Please choose a shop first"]
+      redirect "/shops"
+    end
+    session[:shop_id] = params[:id]
     @shop = Shop.get(params[:id])
-    p @shop
-    redirect '/shops'
+    @products = Product.all(shop_id: @shop.id)
+    erb :"shops/show"
   end
 
   get '/shops/products/new' do
@@ -38,7 +43,7 @@ class TillApp < Sinatra::Base
   post '/shops/products' do
     manage_uploaded_file
     create_shop_products
-    redirect "/shops"
+    redirect "/shops/#{@shop.id}"
   end
 
   # start the server if ruby file executed directly

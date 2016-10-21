@@ -3,3 +3,6 @@
 
 *Ignore uploaded files
 /app/public/uploads/*
+
+*Ignore input files
+/app/public/input/*

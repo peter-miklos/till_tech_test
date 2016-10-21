@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.deep_orange-red.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
@@ -27,8 +28,9 @@
         <span class="mdl-layout-title">Till App</span>
         <nav class="mdl-navigation">
           <a class="mdl-navigation__link" href="/">Home</a>
-          <a class="mdl-navigation__link" href="/shops">Shops</a>
           <a class="mdl-navigation__link" href="/shops/products/new">Upload products</a>
+          <a class="mdl-navigation__link" href="/shops">Shops</a>
+          <a class="mdl-navigation__link" href="/shops/<%= session[:shop_id]%>">Products</a>
         </nav>
       </div>
       <main class="mdl-layout__content">
@@ -66,5 +68,7 @@
         </div>
       </footer>
     </div>
+
+    <script src="/javascript/till.js"></script>
   </body>
 </html>
