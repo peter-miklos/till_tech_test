@@ -26,11 +26,29 @@
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Till App</span>
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="">Link</a>
+          <a class="mdl-navigation__link" href="/">Home</a>
+          <a class="mdl-navigation__link" href="/shops/products/new">Upload products</a>
         </nav>
       </div>
       <main class="mdl-layout__content">
         <div class="page-content">
+          <div class="mdl-grid">
+            <% if flash[:errors] %>
+              <ul id="errors">
+                <% flash[:errors].each do |error| %>
+                <div class="" role="alert">
+                  <strong><%= error %></strong>
+                </div>
+                <% end %>
+              </ul>
+            <% end %>
+            <% if flash[:notice] %>
+              <div class="" role="success">
+                <span class="" aria-hidden="true"></span>
+                <strong><%= "#{flash[:notice]}" if flash[:notice] %></strong>
+              </div>
+            <% end %>
+          </div>
           <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone mdl-cell--8-col-tablet">
               <%= yield %>

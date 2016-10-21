@@ -1,10 +1,16 @@
 require 'sinatra/base'
+require 'sinatra/flash'
 require 'json'
 require_relative 'data_mapper_setup'
 
 ENV["RACK_ENV"] ||= "development"
 
 class TillApp < Sinatra::Base
+  register Sinatra::Flash
+  enable :sessions
+  set :session_secret, "super secret"
+
+
   get '/' do
     redirect '/orders'
   end
@@ -18,13 +24,33 @@ class TillApp < Sinatra::Base
   end
 
   post '/shops/products' do
+    if (params[:file] = "")
+      flash[:errors] = ["Choose a file first"]
+      redirect '/shops/products/new'
+    end
     @filename = params[:file][:filename]
     file = params[:file][:tempfile]
     File.open("./app/public/uploads/#{@filename}", 'wb') do |f|
       f.write(file.read)
     end
     file = File.read("./app/public/uploads/#{@filename}")
-    data_hash = JSON.parse(file)
+    input = JSON.parse(file)
+
+    shop = Shop.first(name: input[0]["shopName"])
+    if (!shop)
+      shop = Shop.create(name: input[0]["shopName"], address: input[0]["address"],
+                      phone: input[0]["phone"])
+    end
+
+    input[0]["prices"][0].each do |k, v|
+      product = Product.first(name: k, shop_id: shop.id)
+      if (product)
+        product.update(price: v)
+      else
+        Product.create(name: k, price: v, shop_id: shop.id)
+      end
+    end
+
     redirect "/"
   end
 
