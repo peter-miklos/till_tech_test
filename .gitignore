@@ -1,2 +1,5 @@
 *Ignore all coverage files
 /coverage/*
+
+*Ignore uploaded files
+/app/public/uploads/*

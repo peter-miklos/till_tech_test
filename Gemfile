@@ -6,6 +6,7 @@ gem 'sinatra'
 gem 'rake'
 gem 'data_mapper'
 gem 'dm-postgres-adapter'
+gem 'json'
 
 group :test do
   gem 'rspec'
