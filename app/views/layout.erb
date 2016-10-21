@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.deep_orange-red.min.css">
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <!-- Always shows a header, even in smaller screens. -->
@@ -30,9 +31,21 @@
       </div>
       <main class="mdl-layout__content">
         <div class="page-content">
-          <%= yield %>
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone mdl-cell--8-col-tablet">
+              <%= yield %>
+            </div>
+          </div>
         </div>
       </main>
+      <footer class="mdl-mini-footer">
+        <div class="mdl-mini-footer__left-section">
+          <div class="mdl-logo">Till App</div>
+          <ul class="mdl-mini-footer__link-list">
+            <li><a href="https://github.com/peter-miklos">Created by Peter Miklos</a></li>
+          </ul>
+        </div>
+      </footer>
     </div>
   </body>
 </html>
