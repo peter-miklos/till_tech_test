@@ -1,0 +1,20 @@
+<h2>Available shops</h2>
+
+<% if (@shops)%>
+  <% @shops.each do |shop|%>
+    <ul class="demo-list-three mdl-list">
+      <li class="mdl-list__item mdl-list__item--three-line">
+        <span class="mdl-list__item-primary-content">
+          <i class="material-icons mdl-list__item-avatar">local_drink</i>
+          <a href="/shops/<%= shop.id %>"><span><%= shop.name %></span></a>
+          <span class="mdl-list__item-text-body">
+            Address: <%= shop.address %><br/>
+            Phone: <%= shop.phone %>
+          </span>
+        </span>
+      </li>
+    </ul>
+  <% end %>
+<% else %>
+  No shops found
+<% end %>

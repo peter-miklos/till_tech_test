@@ -34,8 +34,8 @@ module Helpers
   def find_or_add_shop
     @shop = Shop.first(name: @input[0]["shopName"])
     if (!@shop)
-      @shop = Shop.create(name: @input[0]["shopName"], address: input[0]["address"],
-                      phone: @input[0]["phone"])
+      @shop = Shop.create(name: @input[0]["shopName"], address: @input[0]["address"],
+                          phone: @input[0]["phone"])
     end
   end
 
