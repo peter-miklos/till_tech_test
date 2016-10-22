@@ -1,1 +1,26 @@
-ORDERS
+<h3>Orders</h3>
+
+<% if (@orders == [])%>
+  No order found
+<% else %>
+  <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="products_table">
+    <thead>
+      <tr>
+        <th class="mdl-data-table__cell--non-numeric">Order date and time</th>
+        <th>Total</th>
+        <th>Nr of products</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each.with_index do |order, index| %>
+        <tr id="order">
+          <td class="mdl-data-table__cell--non-numeric">
+            <a href="/shops/<%= @shop.id%>/orders/<%= order.id %>/show"><%= order.created_at.strftime("%d/%m/%Y %H:%M") %></a>
+          </td>
+          <td>$<%= order.total%></td>
+          <td><%= order.content.length%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

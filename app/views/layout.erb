@@ -27,7 +27,7 @@
           </nav>
         </div>
       </header>
-      <div class="mdl-layout__drawer">
+      <div class="mdl-layout__drawer" id="menu">
         <span class="mdl-layout-title">Till App</span>
         <nav class="mdl-navigation">
           <a class="mdl-navigation__link" href="/">Home</a>
@@ -35,6 +35,7 @@
           <a class="mdl-navigation__link" href="/shops">Shops</a>
           <% if session[:shop_id] %>
             <a class="mdl-navigation__link" href="/shops/<%= session[:shop_id]%>">Products</a>
+            <a class="mdl-navigation__link" href="/shops/<%= session[:shop_id]%>/orders">Orders</a>
           <% end %>
         </nav>
       </div>

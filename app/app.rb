@@ -13,11 +13,7 @@ class TillApp < Sinatra::Base
   helpers Helpers
 
   get '/' do
-    redirect '/orders'
-  end
-
-  get '/orders' do
-    erb :'orders/index'
+    redirect '/shops'
   end
 
   get '/shops' do
@@ -35,6 +31,12 @@ class TillApp < Sinatra::Base
     session[:shop_name] = @shop.name
     @products = Product.all(shop_id: @shop.id)
     erb :"shops/show"
+  end
+
+  get '/shops/?:shop_id?/orders' do
+    @shop = Shop.get(params[:shop_id])
+    @orders = Order.all(shop_id: params[:shop_id])    
+    erb :'orders/index'
   end
 
   post "/shops/?:shop_id?/orders/new" do
@@ -56,10 +58,10 @@ class TillApp < Sinatra::Base
       redirect "/shops/#{params[:shop_id]}"
     end
     order = Order.create(total: total, content: content, shop_id: @shop.id)
-    redirect "/shops/#{@shop.id}/orders/#{order.id}"
+    redirect "/shops/#{@shop.id}/orders/#{order.id}/show"
   end
 
-  get "/shops/?:shop_id?/orders/?:order_id?" do
+  get "/shops/?:shop_id?/orders/?:order_id?/show" do
     @shop = Shop.get(params[:shop_id])
     @order = Order.get(params[:order_id])
     erb :"orders/show"
