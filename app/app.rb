@@ -36,6 +36,25 @@ class TillApp < Sinatra::Base
     erb :"shops/show"
   end
 
+  post "/shops/?:id?/order" do
+
+    total = 0
+    content = []
+    params.each do |k, v|
+      if (v == "on")
+        id = k.to_i
+        product = Product.get(id)
+        @shop = Shop.get(product.shop_id)
+        quantity = params["quantity_#{id}".to_sym].to_i
+        sum = (product.price * quantity).round(2)
+        content << {product: product, sum: sum}
+        total += sum
+      end
+    end
+    Order.create(total: total, content: content, shop_id: @shop.id)
+    redirect "/shops"
+  end
+
   get '/shops/products/new' do
     erb :"shops/products/new"
   end

@@ -7,6 +7,7 @@ class Product
   property :name,       Text, required: true, length: 100
   property :price,      Float, required: true
 
-  belongs_to :shop
+  belongs_to  :shop
+  has n,      :orders, through: :shop
 
 end

@@ -6,31 +6,41 @@
 <h3>Available products</h3>
 
 <% if (@products != []) %>
-  <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-    <thead>
-      <tr>
-        <th class="mdl-data-table__cell--non-numeric">Select</th>
-        <th class="mdl-data-table__cell--non-numeric">Product name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @products.each do |product| %>
-        <tr id="product">
-          <td class="mdl-data-table__cell--non-numeric"><input type="checkbox" id="ch_<%= product.id%>"></td>
-          <td class="mdl-data-table__cell--non-numeric"><%= product.name%></td>
-          <td>$<%= product.price%></td>
-          <td>
-            <div class="">
-              <input type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="quantity_<%= product.id%>" maxlength="4" size="6" value=0>
-              <span class="mdl-textfield__error">Input is not a number!</span>
-            </div>
-          </td>
+  <div class="mdl-grid" id="submit_1">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="submit_order" form="order_form">Submit order
+    </button>
+  </div>
+  <form id="order_form" action="/shops/<%= @shop.id %>/order" method="post">
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="products_table">
+      <thead>
+        <tr>
+          <th class="mdl-data-table__cell--non-numeric">Select</th>
+          <th class="mdl-data-table__cell--non-numeric">Product name</th>
+          <th>Price</th>
+          <th>Quantity</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @products.each.with_index do |product, index| %>
+          <tr id="product">
+            <td class="mdl-data-table__cell--non-numeric"><input type="checkbox" id="ch_<%= product.id%>" name="<%= product.id%>"></td>
+            <td class="mdl-data-table__cell--non-numeric"><%= product.name%></td>
+            <td>$<%= product.price%></td>
+            <td>
+              <div class="">
+                <input type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="quantity_<%= product.id%>" maxlength="4" size="6" value=0 name="quantity_<%= product.id%>">
+                <span class="mdl-textfield__error">Input is not a number!</span>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </form>
+  <div class="mdl-grid" id="submit_2">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="submit_order">Submit order
+    </button>
+  </div>
 <% else %>
   No products found.
 <% end %>

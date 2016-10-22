@@ -9,5 +9,6 @@ class Shop
   property :phone,      String, required: true
 
   has n, :products
+  has n, :orders
 
 end
