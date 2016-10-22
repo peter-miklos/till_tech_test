@@ -28,7 +28,7 @@
             <td>$<%= product.price%></td>
             <td>
               <div class="">
-                <input type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="quantity_<%= product.id%>" maxlength="4" size="6" value=0 name="quantity_<%= product.id%>">
+                <input type="number" pattern="-?[0-9]*(\.[0-9]+)?" id="quantity_<%= product.id%>" min="0" max="10" size="3" value=0 name="quantity_<%= product.id%>">
                 <span class="mdl-textfield__error">Input is not a number!</span>
               </div>
             </td>

@@ -4,8 +4,9 @@
 <strong>Address: </strong><%= @shop.address%><br />
 <strong>Phone: </strong><%= @shop.phone%>
 
-<h4>Ordered items</h4>
-<p><strong>Order value: </strong>$<%= @order.total%></p>
+<h4>Details</h4>
+
+<p><strong>Order date, time: </strong><%= @order.created_at.strftime("%d/%m/%Y %H:%M")%></p>
 
 <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="products_table">
   <thead>
@@ -26,4 +27,39 @@
       </tr>
     <% end %>
   </tbody>
+  <tfoot>
+    <tr id="discount_value">
+      <td><strong>Discount:</strong></td>
+      <td></td>
+      <td><strong>TBD</strong></td>
+      <td></td>
+    </tr>
+    <tr id="vat">
+      <td><strong>VAT:</strong></td>
+      <td></td>
+      <td>
+        <% order_vat = (@order.total / (1 + (@vat / 100.0))) * (@vat / 100.0) %>
+        <strong>$<%= order_vat.round(2) %></strong>
+      </td>
+      <td></td>
+    </tr>
+    <tr id="total">
+      <td><strong>TOTAL:</strong></td>
+      <td></td>
+      <td><strong>$<%= @order.total %></strong></td>
+      <td></td>
+    </tr>
+    <tr id="payment_type">
+      <td><strong>Payment:</strong></td>
+      <td></td>
+      <td><strong>TBD</strong></td>
+      <td></td>
+    </tr>
+    <tr id="change">
+      <td><strong>Change:</strong></td>
+      <td></td>
+      <td><strong>$ TBD</strong></td>
+      <td></td>
+    </tr>
+  </tfoot>
 </table>

@@ -35,7 +35,7 @@ class TillApp < Sinatra::Base
 
   get '/shops/?:shop_id?/orders' do
     @shop = Shop.get(params[:shop_id])
-    @orders = Order.all(shop_id: params[:shop_id])    
+    @orders = Order.all(shop_id: params[:shop_id])
     erb :'orders/index'
   end
 
@@ -64,6 +64,7 @@ class TillApp < Sinatra::Base
   get "/shops/?:shop_id?/orders/?:order_id?/show" do
     @shop = Shop.get(params[:shop_id])
     @order = Order.get(params[:order_id])
+    @vat = DEFAULT_VAT
     erb :"orders/show"
   end
 

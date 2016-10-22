@@ -5,7 +5,7 @@ feature "add new order" do
   let!(:shop2) {Shop.create(name: "Test Shop", address: "Bristol", phone: "54321")}
   let!(:product1) {Product.create(name: "Cafe Latte", price: 1.99, shop_id: shop1.id)}
   let!(:product2) {Product.create(name: "Flat White", price: 1.89, shop_id: shop1.id)}
-  
+
   it "creates the order with the chosen products" do
     visit "/shops"
     click_link "The Coffee Connection"
@@ -91,7 +91,7 @@ feature "show order details" do
   let!(:product1) {Product.create(name: "Cafe Latte", price: 1.99, shop_id: shop1.id)}
   let!(:product2) {Product.create(name: "Flat White", price: 1.89, shop_id: shop1.id)}
 
-  scenario "show the content of an existing order" do
+  before do
     visit "/shops"
     within("div#yield") {click_link "The Coffee Connection"}
     find(:css, "#ch_#{product1.id}").set(true)
@@ -99,15 +99,23 @@ feature "show order details" do
     find(:css, "#ch_#{product2.id}").set(true)
     fill_in("quantity_#{product2.id}", with: 2)
     within("div#submit_1") {click_button("Submit order")}
-
     click_link "Orders"
     within("tr#order") {click_link}
+  end
+
+  scenario "show the content of an existing order" do
     order = Order.last
 
     expect(current_path).to eq "/shops/#{shop1.id}/orders/#{order.id}/show"
     expect(page).to have_css("div#yield", text: shop1.name)
     expect(page).to have_css("tr#product", text: product1.price)
     expect(page).to have_css("tr#product", text: product2.price)
+  end
+
+  scenario "shows the VAT in the order details" do
+    order = Order.last
+    vat = (order.total - (order.total / 1.1)).round(2)
+    expect(page).to have_css("tr#vat", text: vat)
   end
 
 end

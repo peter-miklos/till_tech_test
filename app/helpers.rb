@@ -1,5 +1,7 @@
 module Helpers
 
+  DEFAULT_VAT = 10
+
   def manage_uploaded_file
     validate_file_upload
     save_uploaded_file
