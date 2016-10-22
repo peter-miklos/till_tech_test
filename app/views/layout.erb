@@ -21,6 +21,9 @@
           <div class="mdl-layout-spacer"></div>
           <!-- Navigation. We hide it in small screens. -->
           <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <% if session[:shop_name] %>
+              Current shop: <a class="mdl-navigation__link" href=""><%= session[:shop_name] %></a>
+            <% end %>
           </nav>
         </div>
       </header>
@@ -30,7 +33,9 @@
           <a class="mdl-navigation__link" href="/">Home</a>
           <a class="mdl-navigation__link" href="/shops/products/new">Upload products</a>
           <a class="mdl-navigation__link" href="/shops">Shops</a>
-          <a class="mdl-navigation__link" href="/shops/<%= session[:shop_id]%>">Products</a>
+          <% if session[:shop_id] %>
+            <a class="mdl-navigation__link" href="/shops/<%= session[:shop_id]%>">Products</a>
+          <% end %>
         </nav>
       </div>
       <main class="mdl-layout__content">

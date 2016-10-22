@@ -15,11 +15,22 @@ feature "add new order" do
     fill_in("quantity_#{product2.id}", with: 2)
     within("div#submit_1") {click_button("Submit order")}
 
-    expect(page).to have_content("Cafe Latte")
-    expect(page).to have_content("Flat White")
-    expect(page).not_to have_content("Tiramisu")
+    order = Order.last
 
+    expect(current_path).to eq("/shops/#{shop1.id}/orders/#{order.id}")
     expect(page).to have_content("9.75")
+    expect(page).to have_content("1.99")
+    expect(page).to have_content("1.89")
+    expect(page).not_to have_content("3.99")
+  end
+
+  it "does not create an order if no product was chosen" do
+    visit "/shops"
+    click_link "The Coffee Connection"
+    within("div#submit_1") {click_button("Submit order")}
+
+    expect(current_path).to eq "/shops/#{shop1.id}"
+    expect(page).to have_css("ul#errors", "Please choose product and add quantity")
   end
 
 end

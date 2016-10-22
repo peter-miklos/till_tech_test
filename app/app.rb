@@ -30,29 +30,39 @@ class TillApp < Sinatra::Base
       flash[:errors] = ["Please choose a shop first"]
       redirect "/shops"
     end
-    session[:shop_id] = params[:id]
     @shop = Shop.get(params[:id])
+    session[:shop_id] = params[:id]
+    session[:shop_name] = @shop.name
     @products = Product.all(shop_id: @shop.id)
     erb :"shops/show"
   end
 
-  post "/shops/?:id?/order" do
-
+  post "/shops/?:shop_id?/orders/new" do
     total = 0
     content = []
     params.each do |k, v|
       if (v == "on")
         id = k.to_i
         product = Product.get(id)
-        @shop = Shop.get(product.shop_id)
+        @shop = Shop.get(params[:shop_id])
         quantity = params["quantity_#{id}".to_sym].to_i
         sum = (product.price * quantity).round(2)
-        content << {product: product, sum: sum}
+        content << {product: product, quantity: quantity, sum: sum}
         total += sum
       end
     end
-    Order.create(total: total, content: content, shop_id: @shop.id)
-    redirect "/shops"
+    if total == 0
+      flash[:errors] = ["Please choose product and add quantity"]
+      redirect "/shops/#{params[:shop_id]}"
+    end
+    order = Order.create(total: total, content: content, shop_id: @shop.id)
+    redirect "/shops/#{@shop.id}/orders/#{order.id}"
+  end
+
+  get "/shops/?:shop_id?/orders/?:order_id?" do
+    @shop = Shop.get(params[:shop_id])
+    @order = Order.get(params[:order_id])
+    erb :"orders/show"
   end
 
   get '/shops/products/new' do

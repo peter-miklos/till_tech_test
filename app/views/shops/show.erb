@@ -10,7 +10,7 @@
     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="submit_order" form="order_form">Submit order
     </button>
   </div>
-  <form id="order_form" action="/shops/<%= @shop.id %>/order" method="post">
+  <form id="order_form" action="/shops/<%= @shop.id %>/orders/new" method="post">
     <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="products_table">
       <thead>
         <tr>
@@ -38,7 +38,7 @@
     </table>
   </form>
   <div class="mdl-grid" id="submit_2">
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="submit_order">Submit order
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="submit_order" form="order_form">Submit order
     </button>
   </div>
 <% else %>

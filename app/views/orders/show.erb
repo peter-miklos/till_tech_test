@@ -1,0 +1,29 @@
+<h3>Order</h3>
+
+<strong>Shop: </strong><%= @shop.name%><br />
+<strong>Address: </strong><%= @shop.address%><br />
+<strong>Phone: </strong><%= @shop.phone%>
+
+<h4>Ordered items</h4>
+<p><strong>Order value: </strong>$<%= @order.total%></p>
+
+<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="products_table">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Product name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Sum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.content.each.with_index do |item, index| %>
+      <tr id="product">
+        <td class="mdl-data-table__cell--non-numeric"><%= item[:product].name%></td>
+        <td>$<%= item[:product].price%></td>
+        <td><%= item[:quantity]%></td>
+        <td>$<%= item[:sum]%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
